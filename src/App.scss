@@ -1,0 +1,62 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  &-span {
+    color: skyblue;
+  }
+  &-span:hover {
+    color: pink;
+  }
+  &-margin10 {
+    margin: 0 10px;
+  }
+  &-header {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    max-width: 100%;
+    background: #fff;
+    box-shadow: 0 2px 8px #f0f1f2;
+    &-body {
+      display: flex;
+      width: 100%;
+      &-logo {
+        display: inline-block;
+        height: 60px;
+        width: 60px;
+        padding: 5px;
+        line-height: 50px;
+        box-sizing: border-box;
+      }
+    }
+  }
+  &-footer {
+    color: #fff;
+    min-height: 60px;
+    // 代码作用 使子元素 水平垂直居中
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-body {
+    min-height: 300px;
+    flex: auto;
+    display: flex;
+    &-main {
+      min-height: 300px;
+      flex: auto;
+      display: flex;
+      flex-direction: column;
+
+      &-content {
+        min-height: 300px;
+        padding: 20px;
+        flex: auto;
+      }
+    }
+  }
+}
