@@ -30,6 +30,16 @@ const routes: MRouteItem[] = [
     components: 'ahooks/lifeCycle',
     breadcrumbName: 'lifeCycle',
   },
+  {
+    path: '/testHooks/mobx',
+    components: 'testHooks/testMobx',
+    breadcrumbName: 'testMobx',
+  },
+  {
+    path: '/menu',
+    components: 'layout/menu/menu',
+    breadcrumbName: 'menu',
+  },
 ];
 const routes_: Route[] = routes.map((route) => {
   const obj: Route = {

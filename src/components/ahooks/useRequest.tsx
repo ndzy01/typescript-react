@@ -6,13 +6,6 @@ import ahooksApi from '../../http/api/ahooks';
 import Mock from 'mockjs';
 import Show from '../show';
 
-function getUsername(): Promise<string> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(Mock.mock('@name'));
-    }, 1000);
-  });
-}
 export function deleteUser(userId: string): Promise<{ success: boolean }> {
   console.log(userId);
   return new Promise((resolve) => {
@@ -25,9 +18,6 @@ function Test01() {
   const firstRequest = useRequest(
     {
       ...ahooksApi.getName,
-      data: {
-        a: '1111',
-      },
     },
     {
       requestMethod: (param: any) => http(param),
@@ -46,23 +36,26 @@ function Test01() {
 
 function Test02() {
   const [state, setState] = useState('');
-  const changeUsername = (username: string): Promise<{ success: boolean }> => {
-    console.log(username);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ success: true });
-      }, 1000);
-    });
-  };
-  const { loading, run } = useRequest(changeUsername, {
-    manual: true,
-    onSuccess: (result, params) => {
-      if (result.success) {
-        setState('');
-        message.success(`The username was changed to "${params[0]}" !`);
-      }
+
+  const request01 = useRequest(
+    {
+      ...ahooksApi.getName,
     },
-  });
+    {
+      manual: true,
+      requestMethod: (requestParams: any) => {
+        console.log(requestParams);
+        return http(requestParams);
+      },
+      onSuccess: (result, params) => {
+        // result 为数据请求结果
+        // params run 携带的参数
+        console.log(result);
+        console.log(params);
+      },
+    }
+  );
+
   return (
     <div>
       <input
@@ -71,31 +64,74 @@ function Test02() {
         placeholder="Please enter username"
         style={{ width: 240, marginRight: 16 }}
       />
-      <button disabled={loading} type="button" onClick={() => run(state)}>
-        {loading ? 'loading' : 'Edit'}
+      <button
+        disabled={request01.loading}
+        type="button"
+        onClick={() => request01.run(state, '11')}
+      >
+        {request01.loading ? 'loading' : 'submit'}
       </button>
     </div>
   );
 }
 
 const Test03 = () => {
-  const { data, loading, run, cancel } = useRequest(getUsername, {
-    pollingInterval: 1000,
-    pollingWhenHidden: false,
-  });
+  const request01 = useRequest(
+    {
+      ...ahooksApi.getName,
+    },
+    {
+      requestMethod: (requestParams: any) => {
+        return http(requestParams);
+      },
+      formatResult: (res) => res.data.data,
+      pollingInterval: 2000,
+      pollingWhenHidden: false,
+    }
+  );
   return (
     <>
-      <p>Username: {loading ? 'loading' : data}</p>
-      <button type="button" onClick={run}>
+      <p>Username: {request01.loading ? 'loading' : request01.data}</p>
+      <button type="button" onClick={request01.run}>
         start
       </button>
-      <button type="button" onClick={cancel} style={{ marginLeft: 8 }}>
+      <button
+        type="button"
+        onClick={request01.cancel}
+        style={{ marginLeft: 8 }}
+      >
         stop
       </button>
     </>
   );
 };
 const Test04 = () => {
+  const users = [
+    { id: '1', username: 'A' },
+    { id: '2', username: 'B' },
+    { id: '3', username: 'C' },
+  ];
+  // const request01 = useRequest(
+  //   {
+  //     ...ahooksApi.delUserById,
+  //     data: {
+  //       id: users[0].id,
+  //     },
+  //   },
+  //   {
+  //     manual: true,
+  //     requestMethod: (requestParams: any) => {
+  //       console.log(requestParams);
+  //       return http(requestParams);
+  //     },
+  //     onSuccess: (result, params) => {
+  //       // result 为数据请求结果
+  //       // params run 携带的参数
+  //       console.log(result);
+  //       console.log(params);
+  //     },
+  //   }
+  // );
   const { run, fetches } = useRequest(deleteUser, {
     manual: true,
     fetchKey: (id) => id,
@@ -105,11 +141,7 @@ const Test04 = () => {
       }
     },
   });
-  const users = [
-    { id: '1', username: 'A' },
-    { id: '2', username: 'B' },
-    { id: '3', username: 'C' },
-  ];
+
   return (
     <div>
       <div>You can click all buttons, each request has its own status.</div>

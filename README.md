@@ -23,3 +23,15 @@ npm install ahooks
 # mockjs
 
 npm install mockjs @types/mockjs
+
+# 修饰符的插件
+
+npm install babel-plugin-transform-decorators-legacy
+
+# 装饰器的一个插件
+
+npm install @babel/plugin-proposal-decorators
+
+# mobx mobx-react
+
+npm install mobx mobx-react

@@ -1,0 +1,71 @@
+.app-menu {
+  .ant-menu {
+    // 不显示默认的背景色
+    background: none;
+    span {
+      font-size: 14px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 1);
+    }
+
+    &:not(.ant-menu-horizontal) .ant-menu-item-selected {
+      background: linear-gradient(
+        225deg,
+        rgba(16, 205, 214, 1) 0%,
+        rgba(45, 153, 255, 1) 100%
+      );
+    }
+  }
+  .ant-menu-inline {
+    border-right: 0;
+    .ant-menu-submenu {
+      .ant-menu-submenu-title {
+        color: rgba(255, 255, 255, 1);
+      }
+      li {
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+  // menu collapsed
+  .ant-menu-inline-collapsed {
+    width: 56px;
+    border-right: 0;
+
+    .ant-menu-item {
+      left: 0;
+      padding: 0 0 0 16px;
+      text-overflow: clip;
+    }
+    .ant-menu-submenu {
+      .ant-menu-submenu-title {
+        left: 0;
+        padding: 0 0 0 16px;
+        text-overflow: clip;
+      }
+    }
+  }
+}
+
+.ant-menu-submenu-popup {
+  .ant-menu {
+    background: linear-gradient(
+      180deg,
+      rgba(12, 119, 127, 1) 0%,
+      rgba(11, 97, 128, 1) 100%
+    );
+    box-shadow: 2px 0px 8px 0px rgba(21, 128, 152, 0.2);
+    border-radius: 2px;
+    span {
+      color: rgba(255, 255, 255, 1);
+    }
+    &:not(.ant-menu-horizontal) .ant-menu-item-selected {
+      background: linear-gradient(
+        225deg,
+        rgba(16, 205, 214, 1) 0%,
+        rgba(45, 153, 255, 1) 100%
+      );
+    }
+  }
+}
